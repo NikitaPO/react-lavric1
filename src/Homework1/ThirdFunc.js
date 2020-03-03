@@ -36,8 +36,7 @@ export default function ThirdFunc(props) {
 
   const inputChangeHandler = e => {
     let value = +e.target.value;
-    if (isNaN(value)) value = props.min;
-    set(value);
+    set(isNaN(value) ? props.min : value);
   };
 
   return (
