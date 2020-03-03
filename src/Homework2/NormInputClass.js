@@ -1,6 +1,8 @@
 import React, { setState } from "react";
 import PropTypes from "prop-types";
 import Button from "react-bootstrap/Button";
+import InputGroup from "react-bootstrap/InputGroup";
+import FormControl from "react-bootstrap/FormControl";
 
 export default class extends React.PureComponent {
   constructor(props) {
@@ -8,23 +10,24 @@ export default class extends React.PureComponent {
     this.dec = React.createRef();
     this.inc = React.createRef();
     this.state = {
-      counter: this.props.min,
-      inputValue: this.props.min.toString()
+      inputValue: this.props.counter.toString()
     };
   }
 
   static propTypes = {
     max: PropTypes.number.isRequired,
-    min: PropTypes.number.isRequired
+    min: PropTypes.number.isRequired,
+    counter: PropTypes.number.isRequired,
+    onChange: PropTypes.func
   };
 
   buttonsDisableHandler() {
     let dec = this.dec.current;
     let inc = this.inc.current;
-    this.state.counter === this.props.min
+    this.props.counter === this.props.min
       ? (dec.disabled = true)
       : (dec.disabled = false);
-    this.state.counter === this.props.max
+    this.props.counter === this.props.max
       ? (inc.disabled = true)
       : (inc.disabled = false);
   }
@@ -36,15 +39,16 @@ export default class extends React.PureComponent {
   setCounter = newCounter => {
     let { max, min } = this.props;
     let counter = Math.max(Math.min(newCounter, max), min);
-    this.setState({ counter, inputValue: counter });
+    this.props.onChange(counter);
+    this.setState({ inputValue: counter });
   };
 
   increase = () => {
-    this.setCounter(this.state.counter + 1);
+    this.setCounter(this.props.counter + 1);
   };
 
   decrease = () => {
-    this.setCounter(this.state.counter - 1);
+    this.setCounter(this.props.counter - 1);
   };
 
   inputChangeHandler = newStr => {
@@ -68,21 +72,32 @@ export default class extends React.PureComponent {
     }
 
     return (
-      <div>
-        <p>{this.props.min}</p>
-        <Button ref={this.dec} variant="dark" onClick={this.decrease}>
-          -
-        </Button>
-        <input
+      <InputGroup>
+        <InputGroup.Prepend>
+          <Button
+            ref={this.dec}
+            variant="outline-secondary"
+            onClick={this.decrease}
+          >
+            -
+          </Button>
+        </InputGroup.Prepend>
+        <FormControl
           value={this.state.inputValue}
           onChange={e => this.inputChangeHandler(e.target.value)}
           onBlur={this.applyValue}
           onKeyUp={this.checkEnterKey}
         />
-        <Button ref={this.inc} variant="dark" onClick={this.increase}>
-          +
-        </Button>
-      </div>
+        <InputGroup.Append>
+          <Button
+            ref={this.inc}
+            variant="outline-secondary"
+            onClick={this.increase}
+          >
+            +
+          </Button>
+        </InputGroup.Append>
+      </InputGroup>
     );
   }
 }
