@@ -38,17 +38,7 @@ export default class extends React.PureComponent {
         counter: 0
       }
     ],
-    purchasedProducts: [],
-    totalPrice: 0,
     showModalWindow: false
-  };
-
-  changeTotalPrice = () => {
-    const newTotalPrice = this.state.products.reduce(
-      (totalPrice, product) => (totalPrice += product.price * product.counter),
-      0
-    );
-    this.setState({ totalPrice: newTotalPrice });
   };
 
   changeProductCounter = (index, counter) => {
@@ -56,30 +46,17 @@ export default class extends React.PureComponent {
     let newProduct = { ...newProducts[index] };
     newProduct.counter = counter;
     newProducts[index] = newProduct;
-    this.setState({ products: newProducts }, () => {
-      this.calculatePurchasedProducts();
-      this.changeTotalPrice();
-    });
+    this.setState({ products: newProducts });
   };
 
   deleteProductHandler = index => {
     let newProducts = [...this.state.products];
     newProducts.splice(index, 1);
-    this.setState({ products: newProducts }, () => {
-      this.calculatePurchasedProducts();
-      this.changeTotalPrice();
-    });
+    this.setState({ products: newProducts });
   };
 
   handleSubmit = event => {
     event.preventDefault();
-  };
-
-  calculatePurchasedProducts = () => {
-    let purchasedProducts = this.state.products.filter(product =>
-      product.counter ? true : false
-    );
-    this.setState({ purchasedProducts });
   };
 
   toggleModalWindow = () => {
@@ -87,11 +64,18 @@ export default class extends React.PureComponent {
   };
 
   render() {
-    let purchasedProducts = this.state.purchasedProducts.map(product => (
-      <li key={product.id}>
-        {product.title} - {product.counter}
-      </li>
-    ));
+    let purchasedProducts = this.state.products
+      .filter(product => (product.counter ? true : false))
+      .map(product => (
+        <li key={product.id}>
+          {product.title} - {product.counter}
+        </li>
+      ));
+
+    let totalPrice = this.state.products.reduce(
+      (totalPrice, product) => (totalPrice += product.price * product.counter),
+      0
+    );
 
     let productList = this.state.products.map((product, index) => (
       <tr key={product.id}>
@@ -160,7 +144,7 @@ export default class extends React.PureComponent {
                     Buy now
                   </Button>
                 </td>
-                <td>{this.state.totalPrice}</td>
+                <td>{totalPrice}</td>
               </tr>
             </tbody>
           </Table>
