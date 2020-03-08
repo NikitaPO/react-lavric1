@@ -1,58 +1,25 @@
 import React from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
-import NormInputClass from "./Homework2/NormInputClass";
+import MinmaxInput from "./Homework2/MinmaxInput/MinmaxInput";
 
 export default class extends React.PureComponent {
   state = {
-    products: [
-      {
-        id: 100,
-        title: "Ipnone 200",
-        price: 12000,
-        rest: 10,
-        counter: 0
-      },
-      {
-        id: 101,
-        title: "Samsung AAZ8",
-        price: 22000,
-        rest: 5,
-        counter: 0
-      },
-      {
-        id: 103,
-        title: "Nokia 3310",
-        price: 5000,
-        rest: 2,
-        counter: 0
-      },
-      {
-        id: 105,
-        title: "Huawei ZZ",
-        price: 15000,
-        rest: 8,
-        counter: 0
-      }
-    ],
+    products: getProducts(),
     showModalWindow: false
   };
 
-  changeProductCounter = (index, counter) => {
-    let newProducts = [...this.state.products];
-    let newProduct = { ...newProducts[index] };
-    newProduct.counter = counter;
-    newProducts[index] = newProduct;
-    this.setState({ products: newProducts });
+  changeProductCounter = (i, counter) => {
+    let products = [...this.state.products];
+    products[i] = { ...products[i], counter };
+    this.setState({ products });
   };
 
-  deleteProductHandler = index => {
-    let newProducts = [...this.state.products];
-    newProducts.splice(index, 1);
-    this.setState({ products: newProducts });
+  deleteProductHandler = i => {
+    let products = [...this.state.products].filter((product, j) => j !== i);
+    this.setState({ products });
   };
 
   handleSubmit = event => {
@@ -65,7 +32,7 @@ export default class extends React.PureComponent {
 
   render() {
     let purchasedProducts = this.state.products
-      .filter(product => (product.counter ? true : false))
+      .filter(product => !!product.counter)
       .map(product => (
         <li key={product.id}>
           {product.title} - {product.counter}
@@ -73,7 +40,7 @@ export default class extends React.PureComponent {
       ));
 
     let totalPrice = this.state.products.reduce(
-      (totalPrice, product) => (totalPrice += product.price * product.counter),
+      (totalPrice, product) => totalPrice + product.price * product.counter,
       0
     );
 
@@ -85,13 +52,13 @@ export default class extends React.PureComponent {
             onClick={() => this.deleteProductHandler(index)}
             variant="danger"
           >
-            Delete
+            Х
           </Button>
         </td>
         <td>{product.title}</td>
         <td>{product.price}</td>
         <td>
-          <NormInputClass
+          <MinmaxInput
             min={0}
             max={product.rest}
             counter={product.counter}
@@ -123,7 +90,7 @@ export default class extends React.PureComponent {
           <Table striped bordered hover className="col-md-12 col-lg-8">
             <thead>
               <tr>
-                <th>Remove product</th>
+                <th>Delete</th>
                 <th>Title</th>
                 <th>Price</th>
                 <th>Count</th>
@@ -149,7 +116,43 @@ export default class extends React.PureComponent {
             </tbody>
           </Table>
         </Form>
+        <button onClick={() => this.changeProductCounter(0, 5)}>
+          Change counter!
+        </button>
       </>
     );
   }
+}
+
+function getProducts() {
+  return [
+    {
+      id: 100,
+      title: "Ipnone 200",
+      price: 12000,
+      rest: 10,
+      counter: 0
+    },
+    {
+      id: 101,
+      title: "Samsung AAZ8",
+      price: 22000,
+      rest: 5,
+      counter: 0
+    },
+    {
+      id: 103,
+      title: "Nokia 3310",
+      price: 5000,
+      rest: 2,
+      counter: 0
+    },
+    {
+      id: 105,
+      title: "Huawei ZZ",
+      price: 15000,
+      rest: 8,
+      counter: 0
+    }
+  ];
 }
