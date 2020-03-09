@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Button, InputGroup } from "react-bootstrap";
-import LazyInput from "./../LazyInput/LazyInput";
-import styles from "./MinmaxInput.module.css";
+import LazyInput from "./LazyInput/LazyInput";
+import styles from "./Minmax.module.css";
 
 export default class extends React.PureComponent {
   constructor(props) {

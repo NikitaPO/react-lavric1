@@ -1,7 +1,6 @@
 import React from "react";
 import { Table, Button, Form, Modal } from "react-bootstrap";
 import MinmaxInput from "./Homework2/MinmaxInput/MinmaxInput";
-import styles from "./App.module.css";
 
 export default class extends React.PureComponent {
   state = {
