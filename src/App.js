@@ -1,9 +1,7 @@
 import React from "react";
-import Table from "react-bootstrap/Table";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-import Modal from "react-bootstrap/Modal";
+import { Table, Button, Form, Modal } from "react-bootstrap";
 import MinmaxInput from "./Homework2/MinmaxInput/MinmaxInput";
+import styles from "./App.module.css";
 
 export default class extends React.PureComponent {
   state = {
@@ -119,8 +117,6 @@ export default class extends React.PureComponent {
         <button onClick={() => this.changeProductCounter(0, 5)}>
           Change counter!
         </button>
-        <hr />
-        <input defaultValue={"123123"} className="input" />
       </>
     );
   }

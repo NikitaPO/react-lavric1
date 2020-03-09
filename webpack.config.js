@@ -30,7 +30,7 @@ let conf = {
         }
       },
       {
-        test: /\.(sa|sc|c)ss$/,
+        test: /\.module\.(sa|sc|c)ss$/,
         exclude: /node_modules/,
         use: [
           {
@@ -39,7 +39,6 @@ let conf = {
               hmr: process.env.NODE_ENV === "development"
             }
           },
-          // "style-loader",
           {
             loader: "css-loader",
             options: {
@@ -48,8 +47,21 @@ let conf = {
                 localIdentName: "[local]__[sha1:hash:hex:7]"
               }
             }
-          }
-          // "sass-loader"
+          },
+          "sass-loader"
+        ]
+      },
+      {
+        test: /^((?!\.module).)*(sa|sc|c)ss$/,
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              hmr: process.env.NODE_ENV === "development"
+            }
+          },
+          "css-loader",
+          "sass-loader"
         ]
       }
     ]
