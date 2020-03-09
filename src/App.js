@@ -119,6 +119,8 @@ export default class extends React.PureComponent {
         <button onClick={() => this.changeProductCounter(0, 5)}>
           Change counter!
         </button>
+        <hr />
+        <input defaultValue={"123123"} className="input" />
       </>
     );
   }

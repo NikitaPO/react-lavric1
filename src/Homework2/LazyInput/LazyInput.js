@@ -16,8 +16,12 @@ export default class extends React.PureComponent {
   nativeInput = React.createRef();
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevProps.value !== this.props.value) {
-      this.nativeInput.current.value = this.props.value;
+    let input = this.nativeInput.current;
+    if (
+      prevProps.value !== this.props.value ||
+      this.props.value != input.value
+    ) {
+      input.value = this.props.value;
     }
   }
 

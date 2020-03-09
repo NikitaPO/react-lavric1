@@ -1,4 +1,5 @@
 let path = require("path");
+let MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 let conf = {
   entry: "./src/index.js",
@@ -7,6 +8,11 @@ let conf = {
     filename: "index.js",
     publicPath: "dist/"
   },
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: "style.css"
+    })
+  ],
   module: {
     rules: [
       {
@@ -25,7 +31,26 @@ let conf = {
       },
       {
         test: /\.(sa|sc|c)ss$/,
-        use: ["style-loader", "css-loader", "sass-loader"]
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              hmr: process.env.NODE_ENV === "development"
+            }
+          },
+          // "style-loader",
+          {
+            loader: "css-loader",
+            options: {
+              importLoaders: 1,
+              modules: {
+                localIdentName: "[local]__[sha1:hash:hex:7]"
+              }
+            }
+          }
+          // "sass-loader"
+        ]
       }
     ]
   }

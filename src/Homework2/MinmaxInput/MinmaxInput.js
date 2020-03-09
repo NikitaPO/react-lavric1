@@ -1,17 +1,17 @@
-import React, { setState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import Button from "react-bootstrap/Button";
 import InputGroup from "react-bootstrap/InputGroup";
-import FormControl from "react-bootstrap/FormControl";
+import LazyInput from "./../LazyInput/LazyInput";
+import styles from "./MinmaxInput.css";
+
+console.log(styles);
 
 export default class extends React.PureComponent {
   constructor(props) {
     super(props);
     this.dec = React.createRef();
     this.inc = React.createRef();
-    this.state = {
-      inputValue: this.props.counter.toString()
-    };
   }
 
   static propTypes = {
@@ -20,16 +20,6 @@ export default class extends React.PureComponent {
     counter: PropTypes.number.isRequired,
     onChange: PropTypes.func
   };
-
-  componentDidUpdate(prevProps) {
-    if (
-      prevProps.counter !== this.props.counter &&
-      this.props.counter != this.state.inputValue
-    ) {
-      console.log("changed");
-      this.setState({ inputValue: this.props.counter });
-    }
-  }
 
   buttonsDisableHandler() {
     let dec = this.dec.current;
@@ -50,7 +40,6 @@ export default class extends React.PureComponent {
     let { max, min } = this.props;
     let counter = Math.max(Math.min(newCounter, max), min);
     this.props.onChange(counter);
-    this.setState({ inputValue: counter });
   };
 
   increase = () => {
@@ -61,17 +50,9 @@ export default class extends React.PureComponent {
     this.setCounter(this.props.counter - 1);
   };
 
-  inputChangeHandler = newStr => {
-    this.setState({ inputValue: newStr });
-  };
-
-  applyValue = () => {
-    let counter = parseInt(this.state.inputValue);
+  onChange = e => {
+    let counter = parseInt(e.target.value);
     this.setCounter(isNaN(counter) ? this.props.min : counter);
-  };
-
-  checkEnterKey = e => {
-    if (e.key === "Enter" || e.keyCode === 13) this.applyValue();
   };
 
   render() {
@@ -92,11 +73,10 @@ export default class extends React.PureComponent {
             -
           </Button>
         </InputGroup.Prepend>
-        <FormControl
-          value={this.state.inputValue}
-          onChange={e => this.inputChangeHandler(e.target.value)}
-          onBlur={this.applyValue}
-          onKeyUp={this.checkEnterKey}
+        <LazyInput
+          nativeProps={{ type: "text", className: styles.input }}
+          value={this.props.counter}
+          onChange={e => this.onChange(e)}
         />
         <InputGroup.Append>
           <Button
