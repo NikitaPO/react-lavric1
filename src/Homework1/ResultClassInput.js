@@ -26,7 +26,6 @@ export default class extends React.PureComponent {
       prevProps.counter !== this.props.counter &&
       this.props.counter != this.state.inputValue
     ) {
-      console.log("changed");
       this.setState({ inputValue: this.props.counter });
     }
   }

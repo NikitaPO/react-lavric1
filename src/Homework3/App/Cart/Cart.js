@@ -3,6 +3,10 @@ import { Form, Table, Button } from "react-bootstrap";
 import Minmax from "./Minmax/Minmax";
 
 export default class Cart extends Component {
+  handleSubmit = e => {
+    e.preventDefault();
+  };
+
   render() {
     let totalPrice = this.props.products.reduce(
       (totalPrice, product) => totalPrice + product.price * product.counter,
@@ -38,6 +42,8 @@ export default class Cart extends Component {
 
     return (
       <Form onSubmit={this.handleSubmit}>
+        <h1 className="header-title">Cart</h1>
+        <hr />
         <Table striped bordered hover className="col-md-12 col-lg-8">
           <thead>
             <tr>
@@ -57,7 +63,7 @@ export default class Cart extends Component {
                   block
                   variant="success"
                   type="submit"
-                  onClick={this.toggleModalWindow}
+                  onClick={this.props.redirectToOrderForm}
                 >
                   Buy now
                 </Button>

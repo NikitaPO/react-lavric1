@@ -2,14 +2,14 @@ import React from "react";
 import Cart from "./Cart/Cart";
 import OrderForm from "./OrderForm/OrderForm";
 import ResultScreen from "./ResultScreen/ResultScreen";
+import "./App.css";
 
 export default class extends React.PureComponent {
   state = {
     products: getProducts(),
-    route: {
-      showOrderForm: false,
-      showResultScreen: false
-    },
+    userInfo: { name: null, email: null, phone: null },
+    showOrderForm: false,
+    showResultScreen: false,
     showModalWindow: false
   };
 
@@ -24,19 +24,50 @@ export default class extends React.PureComponent {
     this.setState({ products });
   };
 
+  redirectToOrderForm = () => {
+    this.setState({ showOrderForm: true });
+  };
+
+  redirectToResultScreen = () => {
+    this.setState({ showOrderForm: false, showResultScreen: true });
+  };
+
+  toggleModalWindow = () => {
+    this.setState({ showModalWindow: !this.state.showModalWindow });
+  };
+
+  setUserInfo = (name, email, phone) => {
+    this.setState({ userInfo: { name, email, phone } });
+  };
+
   render() {
-    let route = this.state.route;
+    let totalPrice = this.state.products.reduce(
+      (totalPrice, product) => totalPrice + product.price * product.counter,
+      0
+    );
+
     let currentComponent = (
       <Cart
         products={this.state.products}
         changeProductCounter={this.changeProductCounter}
         deleteProductHandler={this.deleteProductHandler}
+        redirectToOrderForm={this.redirectToOrderForm}
       />
     );
 
-    if (route.showOrderForm) {
-      currentComponent = <OrderForm />;
-    } else if (route.showResultScreen) {
+    if (this.state.showOrderForm) {
+      currentComponent = (
+        <OrderForm
+          products={this.state.products}
+          totalPrice={totalPrice}
+          showModalWindow={this.state.showModalWindow}
+          toggleModalWindow={this.toggleModalWindow}
+          setUserInfo={this.setUserInfo}
+          userInfo={this.state.userInfo}
+          redirectToResultScreen={this.redirectToResultScreen}
+        />
+      );
+    } else if (this.state.showResultScreen) {
       currentComponent = <ResultScreen />;
     }
 
