@@ -5,11 +5,7 @@ import styles from "./BootstrapModal.module.css";
 export default class BootstrapModal extends Component {
   render() {
     return (
-      <Modal
-        size="md"
-        show={this.props.showModalWindow}
-        onHide={this.props.toggleModalWindow}
-      >
+      <Modal size="md" show={this.props.showModalWindow} backdrop="static">
         <Modal.Header closeButton>
           <Modal.Title id="example-modal-sizes-title-md">
             Please, check all information:
@@ -19,15 +15,15 @@ export default class BootstrapModal extends Component {
           <ul className={styles.user_info}>
             <li>
               <b>Name: </b>
-              {this.props.userInfo.name}
+              {this.props.userInfo.name.value}
             </li>
             <li>
               <b>Email: </b>
-              {this.props.userInfo.email}
+              {this.props.userInfo.email.value}
             </li>
             <li>
               <b>Phone: </b>
-              {this.props.userInfo.phone}
+              {this.props.userInfo.phone.value}
             </li>
           </ul>
           <h6>Order items:</h6>
@@ -38,10 +34,10 @@ export default class BootstrapModal extends Component {
           </h6>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={this.props.toggleModalWindow}>
+          <Button variant="secondary" onClick={this.props.hide}>
             Close
           </Button>
-          <Button variant="primary" onClick={this.props.redirectToResultScreen}>
+          <Button variant="primary" onClick={this.props.confirm}>
             Confirm order
           </Button>
         </Modal.Footer>

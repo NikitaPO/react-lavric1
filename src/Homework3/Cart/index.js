@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Form, Table, Button } from "react-bootstrap";
-import Minmax from "./Minmax/Minmax";
+import Minmax from "./Minmax";
 
 export default class Cart extends Component {
   handleSubmit = e => {
@@ -44,7 +44,7 @@ export default class Cart extends Component {
       <Form onSubmit={this.handleSubmit}>
         <h1 className="header-title">Cart</h1>
         <hr />
-        <Table striped bordered hover className="col-md-12 col-lg-8">
+        <Table striped bordered hover className="col-md-12 col-lg-10">
           <thead>
             <tr>
               <th>Delete</th>
@@ -63,7 +63,7 @@ export default class Cart extends Component {
                   block
                   variant="success"
                   type="submit"
-                  onClick={this.props.redirectToOrderForm}
+                  onClick={this.props.moveToOrder}
                 >
                   Buy now
                 </Button>

@@ -1,20 +1,35 @@
 import React, { Component } from "react";
-import { Form, Button, Table, Col } from "react-bootstrap";
-import TextInput from "./TextInput/TextInput";
-import BootstrapModal from "./BootstrapModal/BootstrapModal";
+import {
+  Form,
+  Button,
+  Table,
+  Col,
+  InputGroup,
+  FormControl
+} from "react-bootstrap";
+import BootstrapModal from "./BootstrapModal";
 
 export default class OrderForm extends Component {
   handleSubmit = e => {
-    const name = this.userNameInput.current.value;
-    const email = this.userEmailInput.current.value;
-    const phone = this.userPhoneInput.current.value;
-    this.props.setUserInfo(name, email, phone);
     e.preventDefault();
   };
 
-  userNameInput = React.createRef();
-  userEmailInput = React.createRef();
-  userPhoneInput = React.createRef();
+  state = {
+    showModalWindow: false
+  };
+
+  hide = () => {
+    this.setState({ showModalWindow: false });
+  };
+
+  show = () => {
+    this.setState({ showModalWindow: true });
+  };
+
+  confirm = () => {
+    this.hide();
+    this.props.onSend();
+  };
 
   render() {
     const productList = this.props.products.map((product, index) => (
@@ -34,49 +49,58 @@ export default class OrderForm extends Component {
         </li>
       ));
 
+    let formFields = [];
+
+    for (let property in this.props.userInfo) {
+      let field = this.props.userInfo[property];
+
+      formFields.push(
+        <InputGroup key={property} className="p-2">
+          <InputGroup.Prepend>
+            <InputGroup.Text>{field.label}</InputGroup.Text>
+          </InputGroup.Prepend>
+          <FormControl
+            value={field.value}
+            type={field.type}
+            placeholder={field.placeholder}
+            onChange={e => this.props.onChange(property, e.target.value)}
+          />
+        </InputGroup>
+      );
+    }
+
     return (
       <>
         <BootstrapModal
-          showModalWindow={this.props.showModalWindow}
-          toggleModalWindow={this.props.toggleModalWindow}
+          showModalWindow={this.state.showModalWindow}
+          hide={this.hide}
+          confirm={this.confirm}
           purchasedProducts={purchasedProducts}
           userInfo={this.props.userInfo}
           totalPrice={this.props.totalPrice}
-          redirectToResultScreen={this.props.redirectToResultScreen}
+          moveToResult={this.props.moveToResult}
         />
 
-        <Form onSubmit={this.handleSubmit} className="col-lg-8">
+        <Form onSubmit={this.handleSubmit} className="col-lg-10">
           <h1 className="header-title">Order form</h1>
           <Form.Row>
             <Col lg={6}>
-              <TextInput
-                label={"Name"}
-                nativeProps={{
-                  placeholder: "Enter your name...",
-                  ref: this.userNameInput
-                }}
-              />
-              <TextInput
-                label={"E-mail"}
-                nativeProps={{
-                  placeholder: "mail@example.com",
-                  ref: this.userEmailInput
-                }}
-              />
-              <TextInput
-                label={"Phone"}
-                nativeProps={{
-                  placeholder: "Enter your phone...",
-                  ref: this.userPhoneInput
-                }}
-              />
+              {formFields}
               <Form.Row>
                 <Col>
+                  <Button
+                    variant="secondary  "
+                    type="submit"
+                    className="m-2"
+                    onClick={this.props.moveToCart}
+                  >
+                    Back
+                  </Button>
                   <Button
                     variant="success"
                     type="submit"
                     className="m-2"
-                    onClick={this.props.toggleModalWindow}
+                    onClick={this.show}
                   >
                     Confirm the order
                   </Button>
