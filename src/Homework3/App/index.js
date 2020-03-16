@@ -1,7 +1,7 @@
 import React from "react";
-import Cart from "~/Homework3/Cart";
-import OrderForm from "~/Homework3/OrderForm";
-import ResultScreen from "~/Homework3/ResultScreen";
+import Cart from "~p/Cart";
+import OrderForm from "~p/OrderForm";
+import ResultScreen from "~p/ResultScreen";
 import "./App.css";
 
 export default class extends React.PureComponent {
@@ -84,7 +84,7 @@ export default class extends React.PureComponent {
             totalPrice={totalPrice}
             userInfo={this.state.userInfo}
             onChange={this.changeFormData}
-            onSend={() => this.moveToResult()}
+            onSend={this.moveToResult}
             moveToCart={this.moveToCart}
           />
         );
