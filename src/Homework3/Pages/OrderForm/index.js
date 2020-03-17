@@ -7,9 +7,14 @@ import {
   InputGroup,
   FormControl
 } from "react-bootstrap";
+import { observer } from "mobx-react";
 import BootstrapModal from "./BootstrapModal";
+import cartStore from "~s/cartStore";
+import form from "~s/form";
+import router from "~s/router";
 
-export default class OrderForm extends Component {
+@observer
+class OrderForm extends Component {
   handleSubmit = e => {
     e.preventDefault();
   };
@@ -28,11 +33,11 @@ export default class OrderForm extends Component {
 
   confirm = () => {
     this.hide();
-    this.props.onSend();
+    router.moveToPage("result");
   };
 
   render() {
-    const productList = this.props.products.map((product, index) => (
+    const productList = cartStore.products.map((product, index) => (
       <tr key={product.id}>
         <td>{product.title}</td>
         <td>{product.price}</td>
@@ -41,7 +46,7 @@ export default class OrderForm extends Component {
       </tr>
     ));
 
-    const purchasedProducts = this.props.products
+    const purchasedProducts = cartStore.products
       .filter(product => !!product.counter)
       .map(product => (
         <li key={product.id}>
@@ -50,9 +55,8 @@ export default class OrderForm extends Component {
       ));
 
     let formFields = [];
-
-    for (let property in this.props.userInfo) {
-      let field = this.props.userInfo[property];
+    for (let property in form.userInfo) {
+      let field = form.userInfo[property];
 
       formFields.push(
         <InputGroup key={property} className="p-2">
@@ -63,7 +67,7 @@ export default class OrderForm extends Component {
             value={field.value}
             type={field.type}
             placeholder={field.placeholder}
-            onChange={e => this.props.onChange(property, e.target.value)}
+            onChange={e => form.changeFormData(property, e.target.value)}
           />
         </InputGroup>
       );
@@ -76,9 +80,6 @@ export default class OrderForm extends Component {
           hide={this.hide}
           confirm={this.confirm}
           purchasedProducts={purchasedProducts}
-          userInfo={this.props.userInfo}
-          totalPrice={this.props.totalPrice}
-          moveToResult={this.props.moveToResult}
         />
 
         <Form onSubmit={this.handleSubmit} className="col-lg-10">
@@ -89,10 +90,10 @@ export default class OrderForm extends Component {
               <Form.Row>
                 <Col>
                   <Button
-                    variant="secondary  "
+                    variant="secondary"
                     type="submit"
                     className="m-2"
-                    onClick={this.props.moveToCart}
+                    onClick={() => router.moveToPage("cart")}
                   >
                     Back
                   </Button>
@@ -106,7 +107,7 @@ export default class OrderForm extends Component {
                   </Button>
                 </Col>
                 <Col>
-                  <h5 className="p-3">Total: {this.props.totalPrice}</h5>
+                  <h5 className="p-3">Total: {cartStore.totalPrice}</h5>
                 </Col>
               </Form.Row>
             </Col>
@@ -129,3 +130,5 @@ export default class OrderForm extends Component {
     );
   }
 }
+
+export default OrderForm;

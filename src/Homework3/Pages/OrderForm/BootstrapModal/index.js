@@ -1,36 +1,41 @@
 import React, { Component } from "react";
 import { Modal, Button } from "react-bootstrap";
 import styles from "./BootstrapModal.module.css";
+import cartStore from "~s/cartStore";
+import form from "~s/form";
+import router from "~s/router";
 
 export default class BootstrapModal extends Component {
   render() {
+    let userInfoList = [];
+    for (let property in form.userInfo) {
+      userInfoList.push(
+        <li key={property}>
+          <b>{form.userInfo[property].label}: </b>
+          {form.userInfo[property].value}
+        </li>
+      );
+    }
+
     return (
-      <Modal size="md" show={this.props.showModalWindow} backdrop="static">
+      <Modal
+        size="md"
+        show={this.props.showModalWindow}
+        onHide={this.props.hide}
+        backdrop="static"
+      >
         <Modal.Header closeButton>
           <Modal.Title id="example-modal-sizes-title-md">
             Please, check all information:
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <ul className={styles.user_info}>
-            <li>
-              <b>Name: </b>
-              {this.props.userInfo.name.value}
-            </li>
-            <li>
-              <b>Email: </b>
-              {this.props.userInfo.email.value}
-            </li>
-            <li>
-              <b>Phone: </b>
-              {this.props.userInfo.phone.value}
-            </li>
-          </ul>
+          <ul className={styles.user_info}>{userInfoList}</ul>
           <h6>Order items:</h6>
           <ul>{this.props.purchasedProducts}</ul>
           <h6>
             <b>Total price: </b>
-            {this.props.totalPrice}
+            {cartStore.totalPrice}
           </h6>
         </Modal.Body>
         <Modal.Footer>

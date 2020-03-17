@@ -1,24 +1,23 @@
 import React, { Component } from "react";
+import { observer } from "mobx-react";
 import { Form, Table, Button } from "react-bootstrap";
 import Minmax from "./Minmax";
+import cartStore from "~s/cartStore";
+import router from "~s/router";
 
-export default class Cart extends Component {
+@observer
+class Cart extends Component {
   handleSubmit = e => {
     e.preventDefault();
   };
 
   render() {
-    let totalPrice = this.props.products.reduce(
-      (totalPrice, product) => totalPrice + product.price * product.counter,
-      0
-    );
-
-    let productList = this.props.products.map((product, index) => (
+    let productList = cartStore.products.map((product, index) => (
       <tr key={product.id}>
         <td>
           <Button
             block
-            onClick={() => this.props.deleteProductHandler(index)}
+            onClick={() => cartStore.deleteProduct(index)}
             variant="danger"
           >
             Х
@@ -31,9 +30,7 @@ export default class Cart extends Component {
             min={0}
             max={product.rest}
             counter={product.counter}
-            onChange={counter =>
-              this.props.changeProductCounter(index, counter)
-            }
+            onChange={counter => cartStore.changeProductCounter(index, counter)}
           />
         </td>
         <td>{product.counter * product.price}</td>
@@ -63,12 +60,12 @@ export default class Cart extends Component {
                   block
                   variant="success"
                   type="submit"
-                  onClick={this.props.moveToOrder}
+                  onClick={() => router.moveToPage("order")}
                 >
                   Buy now
                 </Button>
               </td>
-              <td>{totalPrice}</td>
+              <td>{cartStore.totalPrice}</td>
             </tr>
           </tbody>
         </Table>
@@ -76,3 +73,5 @@ export default class Cart extends Component {
     );
   }
 }
+
+export default Cart;
