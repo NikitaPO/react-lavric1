@@ -12,6 +12,8 @@ import BootstrapModal from "./BootstrapModal";
 import cartStore from "~s/cartStore";
 import form from "~s/form";
 import router from "~s/router";
+import { Formik } from "formik";
+import * as Yup from "yup";
 
 @observer
 class OrderForm extends Component {
@@ -54,24 +56,39 @@ class OrderForm extends Component {
         </li>
       ));
 
-    let formFields = [];
-    for (let property in form.userInfo) {
-      let field = form.userInfo[property];
+    // let formFields = [];
+    // for (let property in form.userInfo) {
+    //   let field = form.userInfo[property];
 
-      formFields.push(
-        <InputGroup key={property} className="p-2">
-          <InputGroup.Prepend>
-            <InputGroup.Text>{field.label}</InputGroup.Text>
-          </InputGroup.Prepend>
-          <FormControl
-            value={field.value}
-            type={field.type}
-            placeholder={field.placeholder}
-            onChange={e => form.changeFormData(property, e.target.value)}
-          />
-        </InputGroup>
-      );
-    }
+    //   formFields.push(
+    // <InputGroup key={property} className="p-2">
+    //   <InputGroup.Prepend>
+    //     <InputGroup.Text>{field.label}</InputGroup.Text>
+    //   </InputGroup.Prepend>
+    //   <FormControl
+    //     value={field.value}
+    //     type={field.type}
+    //     placeholder={field.placeholder}
+    //     onChange={e => form.changeFormData(property, e.target.value)}
+    //   />
+    // </InputGroup>;
+    //   );
+    // }
+
+    const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+    const validationSchema = Yup.object().shape({
+      name: Yup.string()
+        .min(1, "Must have a character")
+        .max(255, "Must be shorter than 255")
+        .required("Must enter a name"),
+      email: Yup.string()
+        .email("Must be a valid email adress")
+        .max(255, "Must be shorter than 255")
+        .required("Must enter a email"),
+      phone: Yup.string()
+        .matches(phoneRegExp, "Phone number is not valid")
+        .required("Must enter a phone")
+    });
 
     return (
       <>
@@ -81,51 +98,143 @@ class OrderForm extends Component {
           confirm={this.confirm}
           purchasedProducts={purchasedProducts}
         />
-
-        <Form onSubmit={this.handleSubmit} className="col-lg-10">
-          <h1 className="header-title">Order form</h1>
-          <Form.Row>
-            <Col lg={6}>
-              {formFields}
+        <Formik
+          initialValues={{
+            name: form.userInfo.name.value,
+            email: form.userInfo.email.value,
+            phone: form.userInfo.phone.value
+          }}
+          validationSchema={validationSchema}
+        >
+          {({
+            handleSubmit,
+            handleChange,
+            handleBlur,
+            values,
+            touched,
+            isValid,
+            errors
+          }) => (
+            <Form className="col-lg-10" noValidate onSubmit={handleSubmit}>
+              <h1 className="header-title">Order form</h1>
               <Form.Row>
-                <Col>
-                  <Button
-                    variant="secondary"
-                    type="submit"
-                    className="m-2"
-                    onClick={() => router.moveToPage("cart")}
-                  >
-                    Back
-                  </Button>
-                  <Button
-                    variant="success"
-                    type="submit"
-                    className="m-2"
-                    onClick={this.show}
-                  >
-                    Confirm the order
-                  </Button>
+                <Col lg={6}>
+                  <Form.Group>
+                    <InputGroup className="p-2">
+                      <InputGroup.Prepend>
+                        <InputGroup.Text>
+                          {form.userInfo.name.label}
+                        </InputGroup.Text>
+                      </InputGroup.Prepend>
+                      <Form.Control
+                        value={values.name}
+                        type={form.userInfo.name.type}
+                        id="name"
+                        name="name"
+                        placeholder={form.userInfo.name.placeholder}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        isValid={touched.name && !errors.name}
+                        isInvalid={!!errors.name}
+                        required
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        {errors.name}
+                      </Form.Control.Feedback>
+                    </InputGroup>
+                  </Form.Group>
+
+                  <Form.Group>
+                    <InputGroup className="p-2">
+                      <InputGroup.Prepend>
+                        <InputGroup.Text>
+                          {form.userInfo.email.label}
+                        </InputGroup.Text>
+                      </InputGroup.Prepend>
+                      <Form.Control
+                        value={values.email}
+                        type={form.userInfo.email.type}
+                        id="email"
+                        name="email"
+                        placeholder={form.userInfo.email.placeholder}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        isValid={touched.email && !errors.email}
+                        isInvalid={!!errors.email}
+                        required
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        {errors.email}
+                      </Form.Control.Feedback>
+                    </InputGroup>
+                  </Form.Group>
+
+                  <Form.Group>
+                    <InputGroup className="p-2">
+                      <InputGroup.Prepend>
+                        <InputGroup.Text>
+                          {form.userInfo.phone.label}
+                        </InputGroup.Text>
+                      </InputGroup.Prepend>
+                      <Form.Control
+                        value={values.phone}
+                        type={form.userInfo.phone.type}
+                        id="phone"
+                        name="phone"
+                        placeholder={form.userInfo.phone.placeholder}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        isValid={touched.phone && !errors.phone}
+                        isInvalid={!!errors.phone}
+                        required
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        {errors.phone}
+                      </Form.Control.Feedback>
+                    </InputGroup>
+                  </Form.Group>
+                  {/* {formFields} */}
+                  <Form.Row>
+                    <Col>
+                      <Button
+                        variant="secondary"
+                        type="submit"
+                        className="m-2"
+                        onClick={() => router.moveToPage("cart")}
+                      >
+                        Back
+                      </Button>
+                      <Button
+                        variant="success"
+                        type="submit"
+                        className="m-2"
+                        onClick={this.show}
+                      >
+                        Confirm the order
+                      </Button>
+                    </Col>
+                    <Col>
+                      <h5 className="p-3">Total: {cartStore.totalPrice}</h5>
+                    </Col>
+                  </Form.Row>
                 </Col>
                 <Col>
-                  <h5 className="p-3">Total: {cartStore.totalPrice}</h5>
+                  <Table striped bordered hover>
+                    <thead>
+                      <tr>
+                        <th>Title</th>
+                        <th>Price</th>
+                        <th>Count</th>
+                        <th>Total</th>
+                      </tr>
+                    </thead>
+                    <tbody>{productList}</tbody>
+                  </Table>
                 </Col>
               </Form.Row>
-            </Col>
-            <Col>
-              <Table striped bordered hover>
-                <thead>
-                  <tr>
-                    <th>Title</th>
-                    <th>Price</th>
-                    <th>Count</th>
-                    <th>Total</th>
-                  </tr>
-                </thead>
-                <tbody>{productList}</tbody>
-              </Table>
-            </Col>
-          </Form.Row>
-        </Form>
+            </Form>
+          )}
+        </Formik>
       </>
     );
   }

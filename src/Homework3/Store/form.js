@@ -4,19 +4,19 @@ class Form {
   @observable userInfo = {
     name: {
       label: "Name",
-      value: "",
+      value: "DF",
       type: "text",
       placeholder: "Enter your name..."
     },
     email: {
       label: "E-mail",
-      value: "",
+      value: "adsfassfas.com",
       type: "text",
       placeholder: "mail@example.com"
     },
     phone: {
       label: "Phone",
-      value: "",
+      value: "13412351235123",
       type: "text",
       placeholder: "Enter your phone..."
     }

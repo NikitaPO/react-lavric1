@@ -5,6 +5,7 @@ import Minmax from "./Minmax";
 import cartStore from "~s/cartStore";
 import router from "~s/router";
 
+
 @observer
 class Cart extends Component {
   handleSubmit = e => {
