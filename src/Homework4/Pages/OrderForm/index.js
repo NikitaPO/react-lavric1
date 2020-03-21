@@ -11,16 +11,13 @@ import { observer } from "mobx-react";
 import BootstrapModal from "./BootstrapModal";
 import cartStore from "~s/cartStore";
 import form from "~s/form";
-import router from "~s/router";
 import { Formik } from "formik";
 import * as Yup from "yup";
+import { Link } from "react-router-dom";
+import { routesMap } from "~/Homework4/Routes";
 
 @observer
 class OrderForm extends Component {
-  handleSubmit = e => {
-    e.preventDefault();
-  };
-
   state = {
     showModalWindow: false
   };
@@ -31,11 +28,6 @@ class OrderForm extends Component {
 
   show = () => {
     this.setState({ showModalWindow: true });
-  };
-
-  confirm = () => {
-    this.hide();
-    router.moveToPage("result");
   };
 
   render() {
@@ -87,21 +79,22 @@ class OrderForm extends Component {
           }}
           validationSchema={validationSchema}
           onSubmit={(values, props) => {
+            props.validateForm().then(this.show());
             setTimeout(() => {
               console.log(JSON.stringify(values, null, 2));
             });
           }}
         >
           {({
-            handleSubmit,
             handleChange,
             handleBlur,
+            handleSubmit,
             values,
             touched,
             isValid,
             errors
           }) => (
-            <Form className="col-lg-10" onSubmit={handleSubmit}>
+            <Form noValidate className="col-lg-10" onSubmit={handleSubmit}>
               <h1 className="header-title">Order form</h1>
               <Form.Row>
                 <Col lg={6}>
@@ -179,23 +172,19 @@ class OrderForm extends Component {
                       </Form.Control.Feedback>
                     </InputGroup>
                   </Form.Group>
-
                   <Form.Row>
                     <Col>
-                      <Button
-                        variant="secondary"
-                        type="submit"
-                        className="m-2"
-                        onClick={() => router.moveToPage("cart")}
+                      <Link
+                        to={routesMap.cart}
+                        className="btn btn-secondary m-2"
                       >
                         Back
-                      </Button>
+                      </Link>
+
                       <Button
                         variant="success"
                         type="submit"
                         className="m-2"
-                        onClick={this.show}
-                        disabled={true}
                         disabled={!isValid || JSON.stringify(touched) === "{}"}
                       >
                         Confirm the order

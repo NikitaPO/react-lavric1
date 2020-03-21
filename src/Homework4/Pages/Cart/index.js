@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { observer } from "mobx-react";
 import { Form, Table, Button } from "react-bootstrap";
-import Minmax from "./Minmax";
+import { Link } from "react-router-dom";
+import Minmax from "~c/Minmax";
 import cartStore from "~s/cartStore";
-import router from "~s/router";
 
 @observer
 class Cart extends Component {
@@ -56,14 +56,17 @@ class Cart extends Component {
             <tr>
               <td colSpan="3"></td>
               <td>
-                <Button
+                {/* <Button
                   block
                   variant="success"
                   type="submit"
                   onClick={() => router.moveToPage("order")}
                 >
                   Buy now
-                </Button>
+                </Button> */}
+                <Link to="/order" className="btn btn-success">
+                  Buy now
+                </Link>
               </td>
               <td>{cartStore.totalPrice}</td>
             </tr>

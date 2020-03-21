@@ -4,7 +4,7 @@ import router from "~s/router";
 import "./App.css";
 
 @observer
-class App extends React.PureComponent {
+class App extends React.Component {
   render() {
     return <div className="container">{router.component}</div>;
   }

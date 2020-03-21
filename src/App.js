@@ -2,7 +2,7 @@ import React from "react";
 import { Table, Button, Form, Modal } from "react-bootstrap";
 import MinmaxInput from "./Homework2/MinmaxInput/MinmaxInput";
 
-export default class extends React.PureComponent {
+export default class extends React.Component {
   state = {
     products: getProducts(),
     showModalWindow: false

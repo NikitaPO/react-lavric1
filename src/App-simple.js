@@ -5,7 +5,7 @@ import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import LazyInput from "./Homework2/LazyInput/LazyInput";
 
-export default class extends React.PureComponent {
+export default class extends React.Component {
   state = {
     inp1: "start",
     inp2: "start 2  "

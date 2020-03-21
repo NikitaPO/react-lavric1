@@ -10,7 +10,7 @@ class Form {
     },
     email: {
       label: "E-mail",
-      value: "mail@example.com",
+      value: "mailexample.com",
       type: "text",
       placeholder: "mail@example.com"
     },

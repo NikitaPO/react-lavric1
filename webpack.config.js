@@ -70,11 +70,12 @@ let conf = {
   resolve: {
     alias: {
       "~": path.resolve(__dirname, "src"),
-      "~c": path.resolve(__dirname, "src/Homework3/Components"),
-      "~p": path.resolve(__dirname, "src/Homework3/Pages"),
-      "~s": path.resolve(__dirname, "src/Homework3/Store")
+      "~c": path.resolve(__dirname, "src/Homework4/Components"),
+      "~p": path.resolve(__dirname, "src/Homework4/Pages"),
+      "~s": path.resolve(__dirname, "src/Homework4/Store")
     }
-  }
+  },
+  devServer: { historyApiFallback: true }
 };
 
 module.exports = conf;
