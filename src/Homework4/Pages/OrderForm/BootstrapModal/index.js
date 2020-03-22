@@ -4,7 +4,7 @@ import styles from "./BootstrapModal.module.css";
 import cartStore from "~s/cartStore";
 import form from "~s/form";
 import { Link } from "react-router-dom";
-import { routesMap } from "~/Homework4/Routes";
+import { routesMap } from "~/Routes";
 
 export default class BootstrapModal extends Component {
   render() {
@@ -43,9 +43,9 @@ export default class BootstrapModal extends Component {
           <Button variant="secondary" onClick={this.props.hide}>
             Close
           </Button>
-          <Link to={routesMap.result} className="btn btn-primary">
+          <Button type="primary" onClick={this.props.confirm}>
             Confirm order
-          </Link>
+          </Button>
         </Modal.Footer>
       </Modal>
     );

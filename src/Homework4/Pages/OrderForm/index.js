@@ -1,12 +1,5 @@
 import React, { Component } from "react";
-import {
-  Form,
-  Button,
-  Table,
-  Col,
-  InputGroup,
-  FormControl
-} from "react-bootstrap";
+import { Form, Button, Table, Col, InputGroup, Row } from "react-bootstrap";
 import { observer } from "mobx-react";
 import BootstrapModal from "./BootstrapModal";
 import cartStore from "~s/cartStore";
@@ -14,7 +7,7 @@ import form from "~s/form";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { Link } from "react-router-dom";
-import { routesMap } from "~/Homework4/Routes";
+import { routesMap } from "~/Routes";
 
 @observer
 class OrderForm extends Component {
@@ -28,6 +21,11 @@ class OrderForm extends Component {
 
   show = () => {
     this.setState({ showModalWindow: true });
+  };
+
+  confirm = () => {
+    this.hide();
+    this.props.history.push(routesMap.result);
   };
 
   render() {
@@ -94,7 +92,7 @@ class OrderForm extends Component {
             isValid,
             errors
           }) => (
-            <Form noValidate className="col-lg-10" onSubmit={handleSubmit}>
+            <Form noValidate onSubmit={handleSubmit}>
               <h1 className="header-title">Order form</h1>
               <Form.Row>
                 <Col lg={6}>
@@ -173,26 +171,20 @@ class OrderForm extends Component {
                     </InputGroup>
                   </Form.Group>
                   <Form.Row>
-                    <Col>
-                      <Link
-                        to={routesMap.cart}
-                        className="btn btn-secondary m-2"
-                      >
-                        Back
-                      </Link>
-
-                      <Button
-                        variant="success"
-                        type="submit"
-                        className="m-2"
-                        disabled={!isValid || JSON.stringify(touched) === "{}"}
-                      >
-                        Confirm the order
-                      </Button>
-                    </Col>
-                    <Col>
-                      <h5 className="p-3">Total: {cartStore.totalPrice}</h5>
-                    </Col>
+                    <h5 className="m-2">Total: {cartStore.totalPrice}</h5>
+                  </Form.Row>
+                  <Form.Row>
+                    <Link to={routesMap.cart} className="btn btn-secondary m-2">
+                      Back
+                    </Link>
+                    <Button
+                      variant="success"
+                      type="submit"
+                      disabled={!isValid || JSON.stringify(touched) === "{}"}
+                      className="m-2"
+                    >
+                      Confirm the order
+                    </Button>
                   </Form.Row>
                 </Col>
                 <Col>

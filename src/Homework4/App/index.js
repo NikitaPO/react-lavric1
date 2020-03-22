@@ -1,8 +1,10 @@
 import React from "react";
 import { observer } from "mobx-react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
-import routes from "~/Homework4/Routes";
+import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+import { ListGroup, Container, Row, Col } from "react-bootstrap";
+import routes from "~/Routes";
 import "./App.css";
+import { routesMap } from "~/Routes";
 
 @observer
 class App extends React.Component {
@@ -18,7 +20,26 @@ class App extends React.Component {
 
     return (
       <Router>
-        <div className="container">{routesList}</div>
+        <Container>
+          <Row>
+            <Col>
+              <ListGroup className="mt-4">
+                <ListGroup.Item>
+                  <Link to={routesMap.products}>Products</Link>
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <Link to={routesMap.cart}>Cart</Link>
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <Link to={routesMap.order}>Order</Link>
+                </ListGroup.Item>
+              </ListGroup>
+            </Col>
+            <Col lg={9}>
+              <Switch>{routesList}</Switch>
+            </Col>
+          </Row>
+        </Container>
       </Router>
     );
   }

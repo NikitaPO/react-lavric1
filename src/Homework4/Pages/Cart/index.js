@@ -4,6 +4,7 @@ import { Form, Table, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Minmax from "~c/Minmax";
 import cartStore from "~s/cartStore";
+import { routesMap } from "~/Routes";
 
 @observer
 class Cart extends Component {
@@ -41,7 +42,7 @@ class Cart extends Component {
       <Form onSubmit={this.handleSubmit}>
         <h1 className="header-title">Cart</h1>
         <hr />
-        <Table striped bordered hover className="col-md-12 col-lg-10">
+        <Table striped bordered hover>
           <thead>
             <tr>
               <th>Delete</th>
@@ -56,15 +57,7 @@ class Cart extends Component {
             <tr>
               <td colSpan="3"></td>
               <td>
-                {/* <Button
-                  block
-                  variant="success"
-                  type="submit"
-                  onClick={() => router.moveToPage("order")}
-                >
-                  Buy now
-                </Button> */}
-                <Link to="/order" className="btn btn-success">
+                <Link to={routesMap.order} className="btn btn-success">
                   Buy now
                 </Link>
               </td>
