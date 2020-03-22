@@ -4,7 +4,7 @@ import { routesMap } from "~/Routes";
 export default function() {
   return (
     <>
-      <h1>Error 404, page not found</h1>
+      <h1 className="header-title">Error 404, page not found</h1>
       <hr />
       <div className="alert alert-warning">
         <p>
