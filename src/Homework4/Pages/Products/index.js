@@ -6,8 +6,6 @@ import { Card, CardColumns } from "react-bootstrap";
 import { routesMap } from "~/Routes";
 import styles from "./Products.module.css";
 
-console.log(styles);
-
 @observer
 class Products extends Component {
   render() {

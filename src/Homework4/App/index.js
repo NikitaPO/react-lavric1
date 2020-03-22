@@ -2,9 +2,8 @@ import React from "react";
 import { observer } from "mobx-react";
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import { ListGroup, Container, Row, Col } from "react-bootstrap";
-import routes from "~/Routes";
+import routes, { routesMap } from "~/Routes";
 import "./App.css";
-import { routesMap } from "~/Routes";
 
 @observer
 class App extends React.Component {

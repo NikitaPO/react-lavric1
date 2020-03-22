@@ -26,13 +26,13 @@ let routes = [
   },
   {
     name: "product",
-    path: "/product/:id",
+    path: "/p/:some",
     component: Product,
     exact: true
   },
   {
     name: "products",
-    path: "/products",
+    path: "/p",
     component: Products,
     exact: true
   },

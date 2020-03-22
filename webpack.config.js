@@ -31,7 +31,7 @@ let conf = {
         }
       },
       {
-        test: /\.module\.(sa|sc|c)ss$/,
+        test: /\.module\.css$/,
         exclude: /node_modules/,
         use: [
           {
@@ -48,12 +48,11 @@ let conf = {
                 localIdentName: "[local]__[sha1:hash:hex:7]"
               }
             }
-          },
-          "sass-loader"
+          }
         ]
       },
       {
-        test: /^((?!\.module).)*(sa|sc|c)ss$/,
+        test: /^((?!\.module).)*css$/,
         use: [
           {
             loader: MiniCssExtractPlugin.loader,
@@ -61,21 +60,22 @@ let conf = {
               hmr: process.env.NODE_ENV === "development"
             }
           },
-          "css-loader",
-          "sass-loader"
+          "css-loader"
         ]
       }
     ]
   },
   resolve: {
     alias: {
-      "~": path.resolve(__dirname, "src/Homework4/"),
+      "~": path.resolve(__dirname, "src/Homework4"),
       "~c": path.resolve(__dirname, "src/Homework4/Components"),
       "~p": path.resolve(__dirname, "src/Homework4/Pages"),
       "~s": path.resolve(__dirname, "src/Homework4/Store")
     }
   },
-  devServer: { historyApiFallback: true }
+  devServer: {
+    historyApiFallback: true
+  }
 };
 
 module.exports = conf;
