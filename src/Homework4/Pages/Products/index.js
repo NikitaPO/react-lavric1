@@ -3,13 +3,13 @@ import { observer } from "mobx-react";
 import productsStore from "~s/productsStore";
 import { Card, CardColumns } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { routesMap } from "~/Routes";
+import { urlBuilder } from "~/Routes";
 import styles from "./Products.module.css";
 
 @observer
 class Products extends Component {
-  cardClickHandler = id => {
-    this.props.history.push(routesMap.products + "/" + id);
+  cardClickHandler = product => {
+    this.props.history.push(urlBuilder("product", { id: product.id }));
   };
 
   render() {
@@ -17,7 +17,7 @@ class Products extends Component {
       <Card
         key={product.id}
         className={styles.productCard}
-        onClick={() => this.cardClickHandler(product.id)}
+        onClick={() => this.cardClickHandler(product)}
       >
         <Card.Body>
           <Card.Img variant="top" src={product.img} />

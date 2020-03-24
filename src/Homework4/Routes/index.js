@@ -50,5 +50,19 @@ routes.forEach(route => {
   }
 });
 
+let urlBuilder = (name, params) => {
+  if (!routesMap.hasOwnProperty(name)) {
+    return null;
+  }
+
+  let url = routesMap[name];
+
+  for (let key in params) {
+    url = url.replace(":" + key, params[key]);
+  }
+
+  return url;
+};
+
 export default routes;
-export { routesMap };
+export { routesMap, urlBuilder };
