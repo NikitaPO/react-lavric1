@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import { observer } from "mobx-react";
 import { Form, Table, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { routesMap } from "~/Routes";
 import Minmax from "~c/Minmax";
 import cartStore from "~s/cartStore";
-import { routesMap } from "~/Routes";
 
 @observer
 class Cart extends Component {
@@ -13,12 +13,12 @@ class Cart extends Component {
   };
 
   render() {
-    let productList = cartStore.products.map((product, i) => (
+    let productList = cartStore.detailedProducts.map((product, i) => (
       <tr key={product.id}>
         <td>
           <Button
             block
-            onClick={() => cartStore.deleteProduct(i)}
+            onClick={() => cartStore.deleteProduct(product.id)}
             variant="danger"
           >
             Х
@@ -31,7 +31,9 @@ class Cart extends Component {
             min={0}
             max={product.rest}
             counter={product.counter}
-            onChange={cartStore.changeOn[i]}
+            onChange={counter =>
+              cartStore.changeProductCounter(product.id, counter)
+            }
           />
         </td>
         <td>{product.counter * product.price}</td>

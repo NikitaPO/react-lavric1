@@ -29,7 +29,7 @@ class OrderForm extends Component {
   };
 
   render() {
-    const productList = cartStore.products.map((product, index) => (
+    const productList = cartStore.detailedProducts.map((product, index) => (
       <tr key={product.id}>
         <td>{product.title}</td>
         <td>{product.price}</td>
@@ -38,7 +38,7 @@ class OrderForm extends Component {
       </tr>
     ));
 
-    const purchasedProducts = cartStore.products
+    const purchasedProducts = cartStore.detailedProducts
       .filter(product => !!product.counter)
       .map(product => (
         <li key={product.id}>
