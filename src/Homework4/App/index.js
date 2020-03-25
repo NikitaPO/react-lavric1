@@ -1,8 +1,14 @@
 import React from "react";
 import { observer } from "mobx-react";
-import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  NavLink
+} from "react-router-dom";
 import { ListGroup, Container, Row, Col } from "react-bootstrap";
 import routes, { routesMap } from "~/Routes";
+import styles from "./App.module.css";
 import "./App.css";
 
 @observer
@@ -22,15 +28,21 @@ class App extends React.Component {
         <Container>
           <Row>
             <Col>
-              <ListGroup className="mt-4">
+              <ListGroup className={"mt-4 left-nav-list " + styles.navList}>
                 <ListGroup.Item>
-                  <Link to={routesMap.products}>Products</Link>
+                  <NavLink to={routesMap.products} exact>
+                    Products
+                  </NavLink>
                 </ListGroup.Item>
                 <ListGroup.Item>
-                  <Link to={routesMap.cart}>Cart</Link>
+                  <NavLink to={routesMap.cart} exact>
+                    Cart
+                  </NavLink>
                 </ListGroup.Item>
                 <ListGroup.Item>
-                  <Link to={routesMap.order}>Order</Link>
+                  <NavLink to={routesMap.order} exact>
+                    Order
+                  </NavLink>
                 </ListGroup.Item>
               </ListGroup>
             </Col>

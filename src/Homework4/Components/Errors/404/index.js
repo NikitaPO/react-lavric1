@@ -8,7 +8,7 @@ export default function() {
       <hr />
       <div className="alert alert-warning">
         <p>
-          Go to <Link to={routesMap.cart}>home page</Link>
+          Go to <Link to={routesMap.home}>home page</Link>
         </p>
       </div>
     </>

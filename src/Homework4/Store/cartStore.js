@@ -20,9 +20,8 @@ class cartStore {
   }
 
   @computed get totalPrice() {
-    return this.products.reduce((total, pr) => {
-      let product = productsStore.getProduct(pr.id);
-      return total + product.price * pr.counter;
+    return this.detailedProducts.reduce((total, product) => {
+      return total + product.price * product.counter;
     }, 0);
   }
 

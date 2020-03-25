@@ -8,7 +8,7 @@ import Error404 from "~p/Error404";
 let routes = [
   {
     name: "cart",
-    path: "/",
+    path: "/cart",
     component: Cart,
     exact: true
   },
@@ -32,7 +32,7 @@ let routes = [
   },
   {
     name: "products",
-    path: "/products",
+    path: "/",
     component: Products,
     exact: true
   },
