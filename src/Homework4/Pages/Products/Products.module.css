@@ -6,3 +6,18 @@
   box-shadow: 10px 10px 38px -27px rgba(204, 204, 204, 1);
   transition: box-shadow 0.3s;
 }
+
+.productTitle {
+  margin-top: 15px;
+  margin-bottom: 7px;
+  font-size: 25px;
+  color: #000000;
+}
+
+.productTitle:hover {
+  text-decoration: none;
+}
+
+.productCardBadge {
+  margin-left: 8px;
+}

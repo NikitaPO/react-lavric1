@@ -7,6 +7,12 @@ import Error404 from "~p/Error404";
 
 let routes = [
   {
+    name: "home",
+    path: "/",
+    component: Products,
+    exact: true
+  },
+  {
     name: "cart",
     path: "/cart",
     component: Cart,
@@ -32,7 +38,7 @@ let routes = [
   },
   {
     name: "products",
-    path: "/",
+    path: "/products",
     component: Products,
     exact: true
   },

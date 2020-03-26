@@ -2,15 +2,25 @@ import { observable, computed, action } from "mobx";
 import productsStore from "~s/productsStore";
 
 class cartStore {
-  @observable products = [
-    { id: 100, counter: 1 },
-    { id: 101, counter: 2 },
-    { id: 102, counter: 2 },
-    { id: 103, counter: 1 },
-    { id: 104, counter: 1 }
-  ];
+  @observable products = [];
 
   getIndexById = id => this.products.findIndex(pr => pr.id == id);
+
+  @computed get productsMap() {
+    if (this.products.length !== 0) {
+      let map = {};
+      this.products.map(pr => {
+        map[pr.id.toString()] = pr.counter;
+      });
+      return map;
+    }
+
+    return null;
+  }
+
+  @computed get inCart() {
+    return id => this.products.some(pr => pr.id == id);
+  }
 
   @computed get detailedProducts() {
     return this.products.map(pr => {
