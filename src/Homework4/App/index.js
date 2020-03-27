@@ -9,7 +9,6 @@ import {
 import { ListGroup, Container, Row, Col } from "react-bootstrap";
 import routes, { routesMap } from "~/Routes";
 import stores from "~/Stores";
-import styles from "./App.module.css";
 import "./App.css";
 
 @observer
@@ -30,7 +29,7 @@ class App extends React.Component {
           <Container>
             <Row>
               <Col>
-                <ListGroup className={"mt-4 left-nav-list " + styles.navList}>
+                <ListGroup className="mt-4">
                   <ListGroup.Item>
                     <NavLink to={routesMap.products} exact>
                       Products

@@ -8,6 +8,7 @@ let conf = {
     filename: "index.js",
     publicPath: "dist/"
   },
+  devtool: "source-map",
   plugins: [
     new MiniCssExtractPlugin({
       filename: "style.css"

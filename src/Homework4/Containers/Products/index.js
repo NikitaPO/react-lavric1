@@ -1,12 +1,10 @@
 import React, { Component } from "react";
-import { observer, inject } from "mobx-react";
 import { Card, CardColumns, Button, Badge } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { urlBuilder } from "~/Routes";
 import styles from "./Products.module.css";
+import withStore from "~/Hocs/withStore";
 
-@inject("stores")
-@observer
 class Products extends Component {
   render() {
     const productsStore = this.props.stores.productsStore;
@@ -43,6 +41,7 @@ class Products extends Component {
         </Card>
       );
     });
+
     return (
       <>
         <h1 className="header-title">Products</h1>
@@ -53,4 +52,4 @@ class Products extends Component {
   }
 }
 
-export default Products;
+export default withStore(Products);

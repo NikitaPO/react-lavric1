@@ -1,14 +1,17 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { routesMap } from "~/Routes";
-export default function() {
+import LinkButton from "~com/Links/Button";
+export default function(props) {
   return (
     <>
       <h1 className="header-title">Error 404, page not found</h1>
       <hr />
       <div className="alert alert-warning">
         <p>
-          Go to <Link to={routesMap.home}>home page</Link>
+          Go to &nbsp;
+          <LinkButton to={routesMap.home} className="btn btn-primary">
+            home page
+          </LinkButton>
         </p>
       </div>
     </>
