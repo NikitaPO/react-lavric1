@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import { ListGroup, Container, Row, Col } from "react-bootstrap";
 import routes, { routesMap } from "~/Routes";
+import Navigation from "~con/Navigation";
 import stores from "~/Stores";
 import "./App.css";
 
@@ -27,6 +28,7 @@ class App extends React.Component {
       <Provider stores={stores}>
         <Router>
           <Container>
+            <Navigation />
             <Row>
               <Col>
                 <ListGroup className="mt-4">

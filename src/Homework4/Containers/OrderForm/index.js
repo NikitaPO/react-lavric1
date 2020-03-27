@@ -98,6 +98,7 @@ class OrderForm extends Component {
           }) => (
             <Form noValidate onSubmit={handleSubmit}>
               <h1 className="header-title">Order form</h1>
+              <hr />
               <Form.Row>
                 <Col lg={6}>
                   <Form.Group>

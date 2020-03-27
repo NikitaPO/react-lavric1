@@ -4,7 +4,8 @@ import { Row, Col, Image, ListGroup } from "react-bootstrap";
 export default function(props) {
   return (
     <div>
-      <h1 className="header-title">{props.title}</h1>{" "}
+      <h1 className="header-title">{props.title}</h1>
+      <hr />
       <Row>
         <Col>
           <Image src={props.img} thumbnail />

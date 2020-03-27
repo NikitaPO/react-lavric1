@@ -23,6 +23,14 @@ export default class {
     return id => this.products.some(pr => pr.id == id);
   }
 
+  @computed get poductsCount() {
+    return this.products.length;
+  }
+
+  @computed get isEmpty() {
+    return this.products.length === 0;
+  }
+
   @computed get detailedProducts() {
     return this.products.map(pr => {
       const product = this.rootStore.productsStore.getProduct(pr.id);

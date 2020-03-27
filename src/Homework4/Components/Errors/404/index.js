@@ -1,6 +1,6 @@
 import React from "react";
 import { routesMap } from "~/Routes";
-import LinkButton from "~com/Links/Button";
+import LinkButton from "~com/LinkButton";
 export default function(props) {
   return (
     <>
