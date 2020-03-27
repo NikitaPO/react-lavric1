@@ -1,9 +1,9 @@
-import Cart from "~p/Cart";
-import OrderForm from "~p/OrderForm";
-import ResultScreen from "~p/ResultScreen";
-import Products from "~p/Products";
-import Product from "~p/Product";
-import Error404 from "~p/Error404";
+import Cart from "~con/Cart";
+import OrderForm from "~con/OrderForm";
+import ResultScreen from "~con/ResultScreen";
+import Products from "~con/Products";
+import Product from "~con/Product";
+import Error404 from "~con/Error404";
 
 let routes = [
   {

@@ -1,10 +1,11 @@
 import { observable, computed, action } from "mobx";
-import productsStore from "~s/productsStore";
 
-class cartStore {
+export default class {
   @observable products = [];
 
-  getIndexById = id => this.products.findIndex(pr => pr.id == id);
+  constructor(rootStore) {
+    this.rootStore = rootStore;
+  }
 
   @computed get productsMap() {
     if (this.products.length !== 0) {
@@ -24,7 +25,7 @@ class cartStore {
 
   @computed get detailedProducts() {
     return this.products.map(pr => {
-      const product = productsStore.getProduct(pr.id);
+      const product = this.rootStore.productsStore.getProduct(pr.id);
       return { ...product, counter: pr.counter };
     });
   }
@@ -54,6 +55,6 @@ class cartStore {
       this.products.splice(index, 1);
     }
   }
-}
 
-export default new cartStore();
+  getIndexById = id => this.products.findIndex(pr => pr.id == id);
+}

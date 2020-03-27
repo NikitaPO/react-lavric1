@@ -1,14 +1,13 @@
 import React, { Component } from "react";
 import { Form, Button, Table, Col, InputGroup, Row } from "react-bootstrap";
-import { observer } from "mobx-react";
+import { observer, inject } from "mobx-react";
 import BootstrapModal from "./BootstrapModal";
-import cartStore from "~s/cartStore";
-import form from "~s/form";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { Link } from "react-router-dom";
 import { routesMap } from "~/Routes";
 
+@inject("stores")
 @observer
 class OrderForm extends Component {
   state = {
@@ -24,12 +23,20 @@ class OrderForm extends Component {
   };
 
   confirm = () => {
+    setTimeout(() => {
+      console.log(
+        JSON.stringify(this.props.stores.orderStore.userInfo, null, 2)
+      );
+    });
     this.hide();
     this.props.history.push(routesMap.result);
   };
 
   render() {
-    const productList = cartStore.detailedProducts.map((product, index) => (
+    const cartStore = this.props.stores.cartStore;
+    const orderStore = this.props.stores.orderStore;
+
+    const productList = cartStore.detailedProducts.map(product => (
       <tr key={product.id}>
         <td>{product.title}</td>
         <td>{product.price}</td>
@@ -71,16 +78,13 @@ class OrderForm extends Component {
         />
         <Formik
           initialValues={{
-            name: form.userInfo.name.value,
-            email: form.userInfo.email.value,
-            phone: form.userInfo.phone.value
+            name: orderStore.formInfo.name.value,
+            email: orderStore.formInfo.email.value,
+            phone: orderStore.formInfo.phone.value
           }}
           validationSchema={validationSchema}
           onSubmit={(values, props) => {
             props.validateForm().then(this.show());
-            setTimeout(() => {
-              console.log(JSON.stringify(values, null, 2));
-            });
           }}
         >
           {({
@@ -100,15 +104,15 @@ class OrderForm extends Component {
                     <InputGroup className="p-2">
                       <InputGroup.Prepend>
                         <InputGroup.Text>
-                          {form.userInfo.name.label}
+                          {orderStore.formInfo.name.label}
                         </InputGroup.Text>
                       </InputGroup.Prepend>
                       <Form.Control
                         value={values.name}
-                        type={form.userInfo.name.type}
+                        type={orderStore.formInfo.name.type}
                         id="name"
                         name="name"
-                        placeholder={form.userInfo.name.placeholder}
+                        placeholder={orderStore.formInfo.name.placeholder}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         isValid={touched.name && !errors.name}
@@ -125,15 +129,15 @@ class OrderForm extends Component {
                     <InputGroup className="p-2">
                       <InputGroup.Prepend>
                         <InputGroup.Text>
-                          {form.userInfo.email.label}
+                          {orderStore.formInfo.email.label}
                         </InputGroup.Text>
                       </InputGroup.Prepend>
                       <Form.Control
                         value={values.email}
-                        type={form.userInfo.email.type}
+                        type={orderStore.formInfo.email.type}
                         id="email"
                         name="email"
-                        placeholder={form.userInfo.email.placeholder}
+                        placeholder={orderStore.formInfo.email.placeholder}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         isValid={touched.email && !errors.email}
@@ -150,15 +154,15 @@ class OrderForm extends Component {
                     <InputGroup className="p-2">
                       <InputGroup.Prepend>
                         <InputGroup.Text>
-                          {form.userInfo.phone.label}
+                          {orderStore.formInfo.phone.label}
                         </InputGroup.Text>
                       </InputGroup.Prepend>
                       <Form.Control
                         value={values.phone}
-                        type={form.userInfo.phone.type}
+                        type={orderStore.formInfo.phone.type}
                         id="phone"
                         name="phone"
-                        placeholder={form.userInfo.phone.placeholder}
+                        placeholder={orderStore.formInfo.phone.placeholder}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         isValid={touched.phone && !errors.phone}

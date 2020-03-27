@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import { observer } from "mobx-react";
 import { Form, Table, Button } from "react-bootstrap";
+import Minmax from "~com/Minmax";
+import { observer, inject } from "mobx-react";
 import { Link } from "react-router-dom";
 import { routesMap } from "~/Routes";
-import Minmax from "~c/Minmax";
-import cartStore from "~s/cartStore";
 
+@inject("stores")
 @observer
 class Cart extends Component {
   handleSubmit = e => {
@@ -13,7 +13,9 @@ class Cart extends Component {
   };
 
   render() {
-    let productList = cartStore.detailedProducts.map((product, i) => (
+    const cartStore = this.props.stores.cartStore;
+
+    const productList = cartStore.detailedProducts.map((product, i) => (
       <tr key={product.id}>
         <td>
           <Button

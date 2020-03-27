@@ -68,9 +68,9 @@ let conf = {
   resolve: {
     alias: {
       "~": path.resolve(__dirname, "src/Homework4"),
-      "~c": path.resolve(__dirname, "src/Homework4/Components"),
-      "~p": path.resolve(__dirname, "src/Homework4/Pages"),
-      "~s": path.resolve(__dirname, "src/Homework4/Store")
+      "~com": path.resolve(__dirname, "src/Homework4/Components"),
+      "~con": path.resolve(__dirname, "src/Homework4/Containers"),
+      "~s": path.resolve(__dirname, "src/Homework3/Store")
     }
   },
   devServer: {

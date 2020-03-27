@@ -1,12 +1,16 @@
 import React from "react";
 import { Row, Col, Image, ListGroup } from "react-bootstrap";
-import productsStore from "~s/productsStore";
-import Error404 from "~c/Errors/404";
+import { inject, observer } from "mobx-react";
+import Error404 from "~com/Errors/404";
+
+// @inject('stores')
 
 export default function(props) {
-  let productId = props.match.params.id;
-  let product = productsStore.getProduct(productId);
-  let productPage = product ? (
+  // const productsStore = this.props.stores.productsStore;
+
+  const productId = props.match.params.id;
+  const product = productsStore.getProduct(productId);
+  const productPage = product ? (
     <div>
       <h1 className="header-title">{product.title}</h1>{" "}
       <Row>

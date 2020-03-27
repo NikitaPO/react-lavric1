@@ -1,7 +1,7 @@
-import { observable, action } from "mobx";
+import { observable, action, computed } from "mobx";
 
-class Form {
-  @observable userInfo = {
+export default class {
+  @observable formInfo = {
     name: {
       label: "Name",
       value: "DF",
@@ -22,9 +22,21 @@ class Form {
     }
   };
 
+  constructor(rootStore) {
+    this.rootStore = rootStore;
+  }
+
+  @computed get userInfo() {
+    let map = {};
+
+    for (let prop in this.formInfo) {
+      map[prop] = this.formInfo[prop].value;
+    }
+
+    return map;
+  }
+
   @action changeFormData = (property, value) => {
-    this.userInfo[property].value = value;
+    this.formInfo[property].value = value;
   };
 }
-
-export default new Form();

@@ -1,19 +1,20 @@
 import React, { Component } from "react";
 import { Modal, Button } from "react-bootstrap";
+import { inject, observer } from "mobx-react";
 import styles from "./BootstrapModal.module.css";
-import cartStore from "~s/cartStore";
-import form from "~s/form";
-import { Link } from "react-router-dom";
-import { routesMap } from "~/Routes";
 
-export default class BootstrapModal extends Component {
+@inject("stores")
+class BootstrapModal extends Component {
   render() {
-    let userInfoList = [];
-    for (let property in form.userInfo) {
-      userInfoList.push(
+    const orderStore = this.props.stores.orderStore;
+    const cartStore = this.props.stores.cartStore;
+
+    let formInfoList = [];
+    for (let property in orderStore.formInfo) {
+      formInfoList.push(
         <li key={property}>
-          <b>{form.userInfo[property].label}: </b>
-          {form.userInfo[property].value}
+          <b>{orderStore.formInfo[property].label}: </b>
+          {orderStore.formInfo[property].value}
         </li>
       );
     }
@@ -31,7 +32,7 @@ export default class BootstrapModal extends Component {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <ul className={styles.user_info}>{userInfoList}</ul>
+          <ul className={styles.user_info}>{formInfoList}</ul>
           <h6>Order items:</h6>
           <ul>{this.props.purchasedProducts}</ul>
           <h6>
@@ -51,3 +52,5 @@ export default class BootstrapModal extends Component {
     );
   }
 }
+
+export default BootstrapModal;

@@ -1,5 +1,5 @@
 import React from "react";
-import { observer } from "mobx-react";
+import { observer, Provider } from "mobx-react";
 import {
   BrowserRouter as Router,
   Route,
@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import { ListGroup, Container, Row, Col } from "react-bootstrap";
 import routes, { routesMap } from "~/Routes";
+import stores from "~/Stores";
 import styles from "./App.module.css";
 import "./App.css";
 
@@ -24,34 +25,36 @@ class App extends React.Component {
     ));
 
     return (
-      <Router>
-        <Container>
-          <Row>
-            <Col>
-              <ListGroup className={"mt-4 left-nav-list " + styles.navList}>
-                <ListGroup.Item>
-                  <NavLink to={routesMap.products} exact>
-                    Products
-                  </NavLink>
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  <NavLink to={routesMap.cart} exact>
-                    Cart
-                  </NavLink>
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  <NavLink to={routesMap.order} exact>
-                    Order
-                  </NavLink>
-                </ListGroup.Item>
-              </ListGroup>
-            </Col>
-            <Col lg={9}>
-              <Switch>{routesList}</Switch>
-            </Col>
-          </Row>
-        </Container>
-      </Router>
+      <Provider stores={stores}>
+        <Router>
+          <Container>
+            <Row>
+              <Col>
+                <ListGroup className={"mt-4 left-nav-list " + styles.navList}>
+                  <ListGroup.Item>
+                    <NavLink to={routesMap.products} exact>
+                      Products
+                    </NavLink>
+                  </ListGroup.Item>
+                  <ListGroup.Item>
+                    <NavLink to={routesMap.cart} exact>
+                      Cart
+                    </NavLink>
+                  </ListGroup.Item>
+                  <ListGroup.Item>
+                    <NavLink to={routesMap.order} exact>
+                      Order
+                    </NavLink>
+                  </ListGroup.Item>
+                </ListGroup>
+              </Col>
+              <Col lg={9}>
+                <Switch>{routesList}</Switch>
+              </Col>
+            </Row>
+          </Container>
+        </Router>
+      </Provider>
     );
   }
 }

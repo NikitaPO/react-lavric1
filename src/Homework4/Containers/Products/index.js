@@ -1,15 +1,17 @@
 import React, { Component } from "react";
-import { observer } from "mobx-react";
-import productsStore from "~s/productsStore";
+import { observer, inject } from "mobx-react";
 import { Card, CardColumns, Button, Badge } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { urlBuilder } from "~/Routes";
 import styles from "./Products.module.css";
-import cartStore from "~s/cartStore";
 
+@inject("stores")
 @observer
 class Products extends Component {
   render() {
+    const productsStore = this.props.stores.productsStore;
+    const cartStore = this.props.stores.cartStore;
+
     const productsCards = productsStore.products.map(product => {
       const addButton = (
         <Button variant="success" onClick={() => cartStore.add(product.id)}>
