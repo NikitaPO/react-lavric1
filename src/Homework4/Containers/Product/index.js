@@ -1,12 +1,12 @@
 import React from "react";
-import { inject, observer } from "mobx-react";
 import Error404 from "~com/Errors/404";
 import ProductItem from "~com/Products/ProductItem";
+import withStore from "~/Hocs/withStore";
 
-@inject("stores")
-@observer
 class Product extends React.Component {
   render() {
+    const cartStore = this.props.stores.cartStore;
+
     const productsStore = this.props.stores.productsStore;
     const productId = this.props.match.params.id;
     const product = productsStore.getProduct(productId);
@@ -21,10 +21,11 @@ class Product extends React.Component {
           title={product.title}
           rest={product.rest}
           description={product.description}
+          productId={product.id}
         />
       );
     }
   }
 }
 
-export default Product;
+export default withStore(Product);

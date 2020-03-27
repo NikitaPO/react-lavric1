@@ -10,7 +10,7 @@ export default class {
   @computed get productsMap() {
     if (this.products.length !== 0) {
       let map = {};
-      this.products.map(pr => {
+      this.products.forEach(pr => {
         map[pr.id.toString()] = pr.counter;
       });
       return map;
@@ -44,8 +44,15 @@ export default class {
     }, 0);
   }
 
-  @action add(id) {
-    this.products.push({ id, counter: 1 });
+  @action addProduct(id) {
+    if (this.inCart(id)) {
+      const neWcounter = this.productsMap[id] + 1;
+      const rest = this.rootStore.productsStore.getProduct(id).rest;
+
+      if (neWcounter <= rest) this.changeProductCounter(id, neWcounter);
+    } else {
+      this.products.push({ id, counter: 1 });
+    }
   }
 
   @action changeProductCounter = (id, counter) => {

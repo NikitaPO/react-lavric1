@@ -1,12 +1,10 @@
 import React, { Component } from "react";
 import { Form, Table, Button } from "react-bootstrap";
 import Minmax from "~com/Minmax";
-import { observer, inject } from "mobx-react";
 import { Link } from "react-router-dom";
 import { routesMap } from "~/Routes";
+import withStore from "~/Hocs/withStore";
 
-@inject("stores")
-@observer
 class Cart extends Component {
   handleSubmit = e => {
     e.preventDefault();
@@ -74,4 +72,4 @@ class Cart extends Component {
   }
 }
 
-export default Cart;
+export default withStore(Cart);

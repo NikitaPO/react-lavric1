@@ -1,14 +1,12 @@
 import React, { Component } from "react";
 import { Form, Button, Table, Col, InputGroup, Row } from "react-bootstrap";
-import { observer, inject } from "mobx-react";
 import BootstrapModal from "./BootstrapModal";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { Link } from "react-router-dom";
 import { routesMap } from "~/Routes";
+import withStore from "~/Hocs/withStore";
 
-@inject("stores")
-@observer
 class OrderForm extends Component {
   state = {
     showModalWindow: false
@@ -214,4 +212,4 @@ class OrderForm extends Component {
   }
 }
 
-export default OrderForm;
+export default withStore(OrderForm);

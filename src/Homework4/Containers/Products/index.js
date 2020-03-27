@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Card, CardColumns, Button, Badge } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { urlBuilder } from "~/Routes";
+import AddButton from "~con/AddButton";
 import styles from "./Products.module.css";
 import withStore from "~/Hocs/withStore";
 
@@ -11,17 +12,6 @@ class Products extends Component {
     const cartStore = this.props.stores.cartStore;
 
     const productsCards = productsStore.products.map(product => {
-      const addButton = (
-        <Button variant="success" onClick={() => cartStore.add(product.id)}>
-          Add to cart
-          {cartStore.inCart(product.id) ? (
-            <Badge className={styles.productCardBadge} variant="light">
-              {cartStore.productsMap[product.id]}
-            </Badge>
-          ) : null}
-        </Button>
-      );
-
       return (
         <Card key={product.id} className={styles.productCard}>
           <Card.Body>
@@ -36,7 +26,7 @@ class Products extends Component {
               Some quick example text to build on the card title and make up the
               bulk of the card's content.
             </Card.Text>
-            {addButton}
+            <AddButton productId={product.id}>Add to cart</AddButton>
           </Card.Body>
         </Card>
       );

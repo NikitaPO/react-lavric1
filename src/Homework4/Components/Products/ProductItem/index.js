@@ -1,5 +1,7 @@
 import React from "react";
-import { Row, Col, Image, ListGroup } from "react-bootstrap";
+import { Row, Col, Image, ListGroup, Button } from "react-bootstrap";
+import AddButton from "~con/AddButton";
+import DeleteButton from "~con/DeleteButton";
 
 export default function(props) {
   return (
@@ -24,6 +26,17 @@ export default function(props) {
             </ListGroup.Item>
           </ListGroup>
         </Col>
+      </Row>
+      <Row>
+        <DeleteButton
+          productId={props.productId}
+          other={{ className: "mt-3 ml-3 mb-3" }}
+        >
+          Remove
+        </DeleteButton>
+        <AddButton productId={props.productId} other={{ className: "m-3" }}>
+          Add
+        </AddButton>
       </Row>
     </div>
   );

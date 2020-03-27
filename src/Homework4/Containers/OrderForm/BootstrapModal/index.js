@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import { Modal, Button } from "react-bootstrap";
-import { inject, observer } from "mobx-react";
 import styles from "./BootstrapModal.module.css";
+import withStore from "~/Hocs/withStore";
 
-@inject("stores")
 class BootstrapModal extends Component {
   render() {
     const orderStore = this.props.stores.orderStore;
@@ -53,4 +52,4 @@ class BootstrapModal extends Component {
   }
 }
 
-export default BootstrapModal;
+export default withStore(BootstrapModal);
