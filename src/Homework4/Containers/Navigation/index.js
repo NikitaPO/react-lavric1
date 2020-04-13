@@ -1,31 +1,59 @@
-import React, { Component } from "react";
-import { Navbar, Badge } from "react-bootstrap";
-import LinkButton from "~com/LinkButton";
-import { routesMap } from "~/Routes";
+import React, { useEffect, useState } from "react";
+import { ListGroup } from "react-bootstrap";
+import { NavLink } from "react-router-dom";
 import withStore from "~/Hocs/withStore";
+import { routesMap } from "~/Routes";
 
-class Navigation extends Component {
-  render() {
-    const cartStore = this.props.stores.cartStore;
+const Navigation = () => {
+  const listGroup = React.createRef();
+  const [checkLinks, setCheckLinks] = useState(false);
 
-    return (
-      <Navbar
-        bg="light"
-        variant="light"
-        className="d-flex justify-content-between"
-      >
-        <Navbar.Brand>MegaShop</Navbar.Brand>
-        <LinkButton to={routesMap.cart} variant="outline-dark">
-          To cart
-          {cartStore.isEmpty ? null : (
-            <>
-              &nbsp;&nbsp;<Badge variant="dark">{cartStore.poductsCount}</Badge>
-            </>
-          )}
-        </LinkButton>
-      </Navbar>
-    );
-  }
-}
+  useEffect(() => {
+    const links = listGroup.current.childNodes;
+    links.forEach((link) => {
+      link.firstChild.classList.contains("active")
+        ? link.classList.add("active")
+        : link.classList.remove("active");
+    });
+    setCheckLinks(false);
+  }, [checkLinks]);
+
+  const handleClick = () => setCheckLinks(true);
+
+  return (
+    <ListGroup className="mt-4" ref={listGroup}>
+      <ListGroup.Item>
+        <NavLink
+          to={routesMap.products}
+          onClick={handleClick}
+          className="navigation-link"
+          exact
+        >
+          Products
+        </NavLink>
+      </ListGroup.Item>
+      <ListGroup.Item>
+        <NavLink
+          to={routesMap.cart}
+          onClick={handleClick}
+          className="navigation-link"
+          exact
+        >
+          Cart
+        </NavLink>
+      </ListGroup.Item>
+      <ListGroup.Item>
+        <NavLink
+          to={routesMap.order}
+          onClick={handleClick}
+          className="navigation-link"
+          exact
+        >
+          Order
+        </NavLink>
+      </ListGroup.Item>
+    </ListGroup>
+  );
+};
 
 export default withStore(Navigation);

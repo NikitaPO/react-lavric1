@@ -1,3 +1,11 @@
 .header-title {
   padding: 20px;
 }
+
+.list-group-item.active .navigation-link {
+  color: #fff;
+}
+
+.navigation-link.active {
+  text-decoration: none;
+}

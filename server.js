@@ -1,11 +1,11 @@
 const express = require("express");
-const favicon = require("express-favicon");
+// const favicon = require("express-favicon");
 const path = require("path");
 const PORT = process.env.PORT || 8080;
 
 const app = express();
 // // здесь у нас происходит импорт пакетов и определяется порт нашего сервера
-// app.use(favicon(__dirname + "/dist/favicon.ico"));
+app.use(favicon(__dirname + "/dist/favicon.ico"));
 
 // //здесь наше приложение отдаёт статику
 app.use(express.static(__dirname));
@@ -15,11 +15,6 @@ app.use(express.static(path.join(__dirname, "dist")));
 // app.get("/ping", function(req, res) {
 //   return res.send("pong");
 // });
-
-//обслуживание html
-app.get("/*", function(req, res) {
-  res.sendFile(path.join(__dirname, "dist", "index.html"));
-});
 
 app.listen(PORT, () => {
   console.log("Server has been started... http://localhost:8080/");
